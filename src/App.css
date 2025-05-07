@@ -21,20 +21,21 @@
   background-color: rgb(37, 112, 224);
 }
 .bootom-footer{
-  background-color: rgb(17, 167, 67);
+  background-color: rgb(4, 102, 37);
 }
 .backstyling{
-  background-color: rgb(161, 203, 252);
+  background-color: rgb(5, 65, 133);
 }
 .socialspictures{
-  height: 70px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
   margin-right: 5px;
+  border-radius: 12px;
 }
 
 
 .App-header {
-  background-color: #d024e0;
+  background-color: #06582f;
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -58,7 +59,7 @@ nav{
 }
 
 .App-link {
-  color: #61dafb;
+  color: #1040c5;
 }
 
 @keyframes App-logo-spin {
@@ -69,3 +70,13 @@ nav{
     transform: rotate(360deg);
   }
 }
+.text1{
+  font-family: 'Roboto',cursive;
+}
+.card {
+      
+      background-color: rgb(30, 144, 201);
+      border-radius: 15px; /* <--- Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+      font-family: Arial, sans-serif;
+    }

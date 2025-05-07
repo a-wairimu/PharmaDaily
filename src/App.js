@@ -16,8 +16,8 @@ function App() {
     
         <Router>
           <div className="App backstyling">
-            <header className="App-header">
-              <h1>Pharmadaily</h1>
+            <header className="App-header text1">
+              <h1>Welcome to PharmaDaily!</h1>
             </header>
             <Navbar/>
             <Routes>

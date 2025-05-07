@@ -40,7 +40,7 @@ const Getproducts = () => {
     <div className="row">
         <ImageCarousel/>
 
-         <h3 className="mt-1 text-info ">Drugs Available</h3>
+         <h3 className="mt-1 text-light text1 ">Drugs Available</h3>
 
         {/* Bind Error Messages */}
           {loading}
@@ -48,11 +48,11 @@ const Getproducts = () => {
           
 
         {/* Map over products and display them */}
-        {products.map((product) => (
-            <div className="col-md-3 justify-content-center mb-3">
+          {products.map((product) => (
+            <div className="col-md-3 justify-content-center mb-3 ">
                 {/* Card with equal size */}
-                <div className="card shadow card-margin">
-                        <img 
+                <div className="card">
+                      <img 
                             className="product_img mt-4"
                             src={img_url + product.product_photo} 
                             alt="missing"

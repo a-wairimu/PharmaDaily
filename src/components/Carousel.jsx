@@ -9,19 +9,19 @@ return (
         <div className="carousel slide" data-bs-ride="carousel" id="mycarousel">
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                <img src="images/medicine1.jpg"alt="" className="d-block w-100" height="300px"/>
+                <img src="images/p1.avif"alt="" className="d-block w-100" height="500px"/>
                 </div>
 
                 <div className="carousel-item">
-                <img src="images/medicine2.jpg" alt="" className="d-block w-100" height="300px"/>
+                <img src="images/p2.avif" alt="" className="d-block w-100" height="500px"/>
                 </div>
 
                 <div className="carousel-item">
-                <img src="images/medicine3.jpg" alt="" className="d-block w-100" height="300px"/>
+                <img src="images/p3.avif" alt="" className="d-block w-100" height="500px"/>
                 </div>
 
                 <div className="carousel-item">
-                <img src="images/medicine4.jpg" alt="" className="d-block w-100" height="300px"/>
+                <img src="images/p4.jpeg" alt="" className="d-block w-100" height="500px"/>
                 </div>
             </div>
 
