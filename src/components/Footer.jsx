@@ -25,6 +25,8 @@ const Footer = () => {
                 <a href="https://instagram.com">
                 <img src="images/instagram.jpg" alt="" className="socialspictures"/>
                 </a>
+                <h4 className="text-center text-info">Our Email for product delivery</h4>
+                <p>pharmadaily254@gmail.com</p>
                 <p className="text-dark">PharmaDaily! The best, fastest and most conviniently available products around!</p>
             </div>
         </section>

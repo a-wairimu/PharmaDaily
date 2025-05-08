@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Addproducts from './components/Addproducts';
 import Aboutus from './components/Aboutus';
 import Mpesapayment from './components/Mpesapayment';
+import Chat from './components/Chat';
 
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
               <Route path='/addproducts' element={<Addproducts/>}/>
               <Route path='/makepayment' element={<Mpesapayment/>} />
               <Route path='/aboutus' element={<Aboutus/>}/>
+              <Route path='/chat' element={<Chat/>}/>
+
             </Routes>
           </div>
         </Router>

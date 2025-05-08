@@ -1,79 +1,63 @@
-import { useState, useEffect } from "react"; // for state management
-import axios from "axios"; //For API Access
-import { Link, useNavigate } from "react-router-dom"; // For link to other component
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import ImageCarousel from "./Carousel";
 
+
 const Getproducts = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const img_url = "https://AngelaWairimu5429.pythonanywhere.com/static/images/";
 
-    // Initialize Hooks
-    const [products, setProducts] = useState([]);  // Default to empty array instead of a string
-    const [loading, setLoading] = useState(""); //For loading message
-    const [error, setError] = useState(""); //error message hook
+  const getproducts = async () => {
+    setLoading("Please wait, We are retrieving the products...");
+    try {
+      const response = await axios.get("https://AngelaWairimu5429.pythonanywhere.com/api/getproducts");
+      setProducts(response.data);
+      setLoading("");
+    } catch (error) {
+      setLoading("");
+      setError("There was an error fetching products.");
+    }
+  };
 
-    const navigate = useNavigate();
-    
-    //Specify image location URL
-    const img_url = "https://AngelaWairimu5429.pythonanywhere.com/static/images/"
-    
-    const getproducts = async()=>{
-        setLoading("Please wait, We are retrieving the products .."); // Set loading message when fetching starts
-        try {
-        const response = await axios.get("https://AngelaWairimu5429.pythonanywhere.com/api/getproducts")
-        setProducts(response.data)
-        console.log(response.data)
-        setLoading("")
-        }
-        catch(error){
-            setLoading("")
-            setError("There was an Error")    
-        }
-    }//end function
+  useEffect(() => {
+    getproducts();
+  }, []);
 
-    // Call getproducts on Use Effect
-    useEffect(() => {
-       getproducts()
-    }, []); // empty dependency array ensures this runs only once when the component mounts
+  return (
+    <div className="container">
+      <ImageCarousel />
+      <h3 className="text1">Drugs Available</h3>
 
-    return (
-        
-    <div className="row">
-        <ImageCarousel/>
+      {loading && <div className="text-info">{loading}</div>}
+      {error && <div className="text-danger">{error}</div>}
 
-         <h3 className="mt-1 text-light text1 ">Drugs Available</h3>
-
-        {/* Bind Error Messages */}
-          {loading}
-          {error}
-          
-
-        {/* Map over products and display them */}
-          {products.map((product) => (
-            <div className="col-md-3 justify-content-center mb-3 ">
-                {/* Card with equal size */}
-                <div className="card">
-                      <img 
-                            className="product_img mt-4"
-                            src={img_url + product.product_photo} 
-                            alt="missing"
-                        />
-                        {/* {product.product_photo} */}
-                  
-                    <div className="card-body">
-                        <h5 className="mt-2">{product.product_name}</h5>
-                        <p className="text-muted">{product.product_description.slice(0, 65)}</p>
-                        <b className="text-warning">{product.product_cost} KES</b>  <br />
-                        <button className="btn btn-success" onClick={()=> navigate("/makepayment", {state : {product}})}>Purchase Now</button>
-                    </div>
-                </div>
+      <div className="row">
+        {products.map((product, index) => (
+          <div key={index} className="col-md-3 mb-4 d-flex align-items-stretch">
+            <div className="card">
+              <img className="product_img mt-2" src={img_url + product.product_photo} alt={product.product_name} />
+              <div className="card-body">
+                <h5>{product.product_name}</h5>
+                <p className="text-muted">{product.product_description.slice(0, 65)}</p>
+                <b className="text-danger">{product.product_cost} KES</b>
+                <br />
+                <button className="btn btn-info mt-2" onClick={() => navigate("/makepayment", { state: { product } })}>
+                  Purchase Now
+                </button>
+              </div>
             </div>
+          </div>
         ))}
+      </div>
 
-        <Footer/>
-        
+      <Footer />
     </div>
-    );
-
-}
+  );
+};
 
 export default Getproducts;

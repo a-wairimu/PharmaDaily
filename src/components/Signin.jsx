@@ -4,101 +4,91 @@ import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
-const Signin = () => {
 
-  // create hooks that will enable to store the different states of your application
+const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // create three additional hooks that will help you store the different states of your application
   const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-  // Below hook will direct a user to a given page when the details entered are correct.
   const navigate = useNavigate();
 
-  // create a function to handle submit event
-  const submit = async (e) =>{
-    // below we prevent page reload
-    e.preventDefault()
+  const submit = async (e) => {
+    e.preventDefault();
+    setLoading("Please wait as we log you in...");
+    setError("");
+    setSuccess("");
 
-    // we update the loading hook with a message
-    setLoading("Please wait as we log you In...")
-
-    // have a try and catch block
-    try{
-      // create a form data object
+    try {
       const data = new FormData();
-
-      // insert records to the new object created
       data.append("email", email);
-      data.append("password", password)
+      data.append("password", password);
 
-      // Post your data through your API
-      const response = await axios.post("https://AngelaWairimu5429.pythonanywhere.com/api/signin", data)
+      const response = await axios.post(
+        "https://AngelaWairimu5429.pythonanywhere.com/api/signin",
+        data
+      );
 
-      // set the loading state back to default
       setLoading("");
 
-      // have an if statement that will check whether there is a record with the details passed
-      if(response.data.user){
-        // setSuccess(response.data.Message)
-        localStorage.setItem("user", JSON.stringify(response.data.user))
-
-        // redirect the user to another page if the details are correct
-        navigate("/")
+      if (response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setSuccess("Login successful! Redirecting...");
+        navigate("/");
+      } else {
+        setError(response.data.Message);
       }
-      else{
-        // setError("An error occured")
-        setError(response.data.Message)
-      }
+    } catch (error) {
+      setLoading("");
+      setError("Error: " + error.message);
     }
-    catch(error){
-      setError(error.message)
-    }
-  }
-
+  };
 
   return (
-    <div className="row justify-content-center mt-4">
-        
-      
-     
-      <div className="col-md-6 card shadow p-4">
-        <h2>Sign In</h2>
-        <form onSubmit={submit}>
+    <div className="container mt-5">
+    
+      <div className="row justify-content-center">
+        <div className="col-md-6 signin-container">
+          <h2 className="signin-title">Sign In</h2>
 
-          {loading}
-          {success}
-          {error}
+          {loading && <div className="alert alert-info">{loading}</div>}
+          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
 
-          <input 
-          type="email"
-          placeholder="Enter your email Address Here."
-          className="form-control"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required /> <br />
+          <form onSubmit={submit} className="signin-form">
+            <div className="mb-3">
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-          {/* {email} */}
+            <div className="mb-4">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-          <input 
-          type="password"
-          placeholder="Enter the password of the user"
-          className="form-control"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required />
-          <br /> <br />
-
-          {/* {password} */}
-
-          <button type="submit" className="btn btn-info">Sign In</button>
-        </form>
+            <button type="submit" className="signin-button">
+              Sign In
+            </button>
+          </form>
+        </div>
       </div>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -39,13 +39,16 @@ return ( <nav className="navbar navbar-expand-md navbar-light bg-light shadow-sm
       {/* Authorization Links (Aligned Right) */}
       <ul className="navbar-nav ms-auto">
         <li className="nav-item">
-          <b><Link to="/aboutus" className="nav-link">About us</Link></b>
+          <b><Link to="/aboutus" className="nav-link text1">About us</Link></b>
         </li>
         <li className="nav-item">
-          <Link to="/signin" className="btn btn-outline-success me-2">Sign in</Link>
+          <Link to="/signin" className="btn btn-outline-success me-2 text1">Sign in</Link>
         </li>
         <li className="nav-item">
-          <Link to="/signup" className="btn btn-success">Sign up</Link>
+          <Link to="/signup" className="btn btn-success text1">Sign up</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/chat" className="btn btn-success text1">Chat with us</Link>
         </li>
       </ul>
     </div>

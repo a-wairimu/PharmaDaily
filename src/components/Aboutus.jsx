@@ -10,7 +10,8 @@ const Aboutus = () => {
         </div>
       </div>
       <div className='col-md-6 justify-content-start '>
-          <p>We are a retail pharmaceutical company serving both walk in and corporate clients. We stock a wide range of quality pharmaceuticals at very affordable prices.We have the best customer service and ensure our clients receive the best from our staff. </p>
+          <p>We are a retail pharmaceutical company serving both walk in and corporate clients. We stock a wide range of quality pharmaceuticals at very competitive prices.We have the best customer service and ensure our clients receive the best from our staff.
+            Products are delivered to customers using 2NK delivery services across the country. Ensure you specify the county in which you want your products to be delivered through our email. </p>
           <ul>
           <h2 className='display-2'>Our Mission</h2>
           <li>To provide pharmacy services that meet utmost international standards and satisfy our clients’ needs through integrity, professionalism, reliability, convenience and accountability.</li>
