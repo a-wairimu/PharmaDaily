@@ -16,7 +16,7 @@ const Aboutus = () => {
           <h2 className='display-2'>Our Mission</h2>
           <li>To provide pharmacy services that meet utmost international standards and satisfy our clients’ needs through integrity, professionalism, reliability, convenience and accountability.</li>
           <h2 className='display-2'>Our vision</h2>
-          <li>To be the leading pharmacy services provider in East, Central and Southern Africa region.</li>
+          <li>To be the leading pharmacy services provider in Kenya.</li>
         </ul>
       </div>
       <div>
