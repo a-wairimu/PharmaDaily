@@ -88,7 +88,7 @@ const Signin = () => {
           </form>
         </div>
       </div>
-      <Footer />
+<Footer />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import Footer from "./Footer";
+
 
 const Mpesapayment = () => {
     const {product} = useLocation().state || {};
@@ -52,6 +54,7 @@ const Mpesapayment = () => {
         <button className='btn btn-success'>Make Payment</button>
        </form>
         </div>
+<Footer />
        
 
     </div>
