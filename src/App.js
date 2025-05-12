@@ -10,11 +10,13 @@ import Addproducts from './components/Addproducts';
 import Aboutus from './components/Aboutus';
 import Mpesapayment from './components/Mpesapayment';
 import Chat from './components/Chat';
+import { LanguageProvider } from "./components/LanguageContext";
+
 
 
 function App() {
   return (
-    
+    <LanguageProvider>
         <Router>
           <div className="App backstyling">
             <header className="App-header text1">
@@ -33,6 +35,7 @@ function App() {
             </Routes>
           </div>
         </Router>
+        </LanguageProvider>
   );
 }
 

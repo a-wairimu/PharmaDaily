@@ -3,7 +3,35 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import { useLanguage } from "./LanguageContext"; 
 
+
+const translations = {
+  en: {
+    heading: "Sign In",
+    emailLabel: "Email Address",
+    emailPlaceholder: "Enter your email",
+    passwordLabel: "Password",
+    passwordPlaceholder: "Enter your password",
+    signIn: "Sign In",
+    loading: "Please wait as we log you in...",
+    error: "An error occurred. Please try again.",
+    selectLanguage: "Select Language",
+    success: "Login successful! Redirecting...",
+  },
+  sw: {
+    heading: "Ingia",
+    emailLabel: "Barua Pepe",
+    emailPlaceholder: "Weka barua pepe yako",
+    passwordLabel: "Nywila",
+    passwordPlaceholder: "Weka nywila yako",
+    signIn: "Ingia",
+    loading: "Tafadhali subiri tunakuingiza...",
+    error: "Hitilafu imetokea. Tafadhali jaribu tena.",
+    selectLanguage: "Chagua Lugha",
+    success: "Umeingia! Tunakuelekeza...",
+  },
+};
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -13,9 +41,12 @@ const Signin = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  const { language, switchLanguage } = useLanguage(); // ✅ Get current language
+  const t = translations[language]; // ✅ Pick correct translation set
+
   const submit = async (e) => {
     e.preventDefault();
-    setLoading("Please wait as we log you in...");
+    setLoading(t.loading);
     setError("");
     setSuccess("");
 
@@ -33,23 +64,34 @@ const Signin = () => {
 
       if (response.data.user) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        setSuccess("Login successful! Redirecting...");
+        setSuccess(t.success);
         navigate("/");
       } else {
         setError(response.data.Message);
       }
     } catch (error) {
       setLoading("");
-      setError("Error: " + error.message);
+      setError(t.error);
     }
   };
 
   return (
     <div className="container mt-5">
-    
+      {/* ✅ Language Selector */}
+      <div className="text-end mb-3">
+        <select
+          className="form-select w-auto"
+          value={language}
+          onChange={(e) => switchLanguage(e.target.value)}
+        >
+          <option value="en">English</option>
+          <option value="sw">Swahili</option>
+        </select>
+      </div>
+
       <div className="row justify-content-center">
         <div className="col-md-6 signin-container">
-          <h2 className="signin-title">Sign In</h2>
+          <h2 className="signin-title">{t.heading}</h2>
 
           {loading && <div className="alert alert-info">{loading}</div>}
           {error && <div className="alert alert-danger">{error}</div>}
@@ -57,12 +99,12 @@ const Signin = () => {
 
           <form onSubmit={submit} className="signin-form">
             <div className="mb-3">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email">{t.emailLabel}</label>
               <input
                 type="email"
                 className="form-control"
                 id="email"
-                placeholder="Enter your email"
+                placeholder={t.emailPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -70,12 +112,12 @@ const Signin = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">{t.passwordLabel}</label>
               <input
                 type="password"
                 className="form-control"
                 id="password"
-                placeholder="Enter your password"
+                placeholder={t.passwordPlaceholder}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -83,12 +125,12 @@ const Signin = () => {
             </div>
 
             <button type="submit" className="signin-button">
-              Sign In
+              {t.signIn}
             </button>
           </form>
         </div>
       </div>
-<Footer />
+      <Footer />
     </div>
   );
 };

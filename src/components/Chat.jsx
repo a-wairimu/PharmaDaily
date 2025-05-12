@@ -6,23 +6,38 @@ const ChatBot = () => {
     { sender: 'bot', text: "Hi, I am your Healthcare assistant. Type 'quit' to end the conversation." },
   ]);
   const [input, setInput] = useState('');
+  const [language, setLanguage] = useState('en'); // Default language
 
-  const pairs = [
-    [/(hi|hello|hey)/i, ["Hello, welcome to PharmaDaily! How can I assist you today?", "Hi there! How can I help?"]],
-    [/how are you\??/i, ["I'm doing great, thanks for asking!", "I'm good, how about you?"]],
-    [/(.*)(purchase|buy)(.*)/i, ["We offer a variety of drugs to manage various illnesses. Are you interested in purchasing today?", "What kind of illness or medical problem are you facing?"]],
-    [/(.*)(colds|flu)(.*)/i, ["Yes, we do offer medicine for common colds and flu. These may include ibuprofen and decongestants such as nasal sprays."]],
-    [/(.*)pain(.*)/i, ["We have a variety of pain relief medicine. Do you want to purchase?"]],
-    [/(.*)rashes(.*)/i, ["We do have medicine to relieve irritation and rashes. However, it is advisable to seek medical attention first."]],
-    [/(.*)(doctor|healthcare professional)(.*)/i, ["Yes, we can refer you to our in-house doctors and healthcare professionals for a checkup first."]],
-    [/(deliver|delivery)/i, ["Yes, we do deliveries within the country, at an additional cost depending on your location."]],
-    [/.*/i, ["Sorry, I didn't understand that. Could you ask something else?", "Can you please clarify?"]],
-  ];
+  const responses = {
+    en: [
+      [/(hi|hello|hey)/i, ["Hello, welcome to PharmaDaily! How can I assist you today?", "Hi there! How can I help?"]],
+      [/how are you\??/i, ["I'm doing great, thanks for asking!", "I'm good, how about you?"]],
+      [/(.*)(purchase|buy)(.*)/i, ["We offer a variety of drugs to manage various illnesses. Are you interested in purchasing today?", "What kind of illness or medical problem are you facing?"]],
+      [/(.*)(colds|flu)(.*)/i, ["Yes, we do offer medicine for common colds and flu. These may include ibuprofen and decongestants such as nasal sprays."]],
+      [/(.*)pain(.*)/i, ["We have a variety of pain relief medicine. Do you want to purchase?"]],
+      [/(.*)rashes(.*)/i, ["We do have medicine to relieve irritation and rashes. However, it is advisable to seek medical attention first."]],
+      [/(.*)(doctor|healthcare professional)(.*)/i, ["Yes, we can refer you to our in-house doctors and healthcare professionals for a checkup first."]],
+      [/(deliver|delivery)/i, ["Yes, we do deliveries within the country, at an additional cost depending on your location."]],
+      [/.*/i, ["Sorry, I didn't understand that. Could you ask something else?", "Can you please clarify?"]],
+    ],
+    sw: [
+      [/(habari yako)/i, ["Habari, karibu PharmaDaily! Naweza kukusaidia vipi leo?", "Hujambo! Naweza kukusaidia vipi?"]],
+      [/how are you\??/i, ["Niko poa, asante kwa kuuliza!", "Niko vizuri, wewe je?"]],
+      [/(.*)(nunua)(.*)/i, ["Tunatibu aina mbalimbali ya magonjwa kwa kuuza madawa ya kudhibiti magonjwa mbalimbali. Je, unahitaji kununua leo?", "Unakutana na tatizo gani la kiafya ambalo ungependa kujua kuhusu dawa?"]],
+      [/(.*)(homa|mafua)(.*)/i, ["Ndio, tunauza dawa za kutibu mafua ya kawaida na homa. Hizi zinaweza kujumuisha ibuprofen na dawa za kupiga mvuke."]],
+      [/(.*)(uchungu|maumivu)(.*)/i, ["Tunatoa aina mbalimbali za dawa za maumivu. Unahitaji kununua?"]],
+      [/(.*)(upele|muwasho)(.*)/i, ["Tuna dawa za kusaidia kutuliza vipele na muwasho. Hata hivyo, ni vyema kutafuta huduma ya daktari kwanza."]],
+      [/(.*)(daktari)(.*)/i, ["Ndio, tunaweza kukuunganisha na madaktari wetu na wataalamu wa afya kwa uchunguzi kwanza."]],
+      [/(uwasilishaji)/i, ["Ndio, tunatoa huduma ya uwasilishaji ndani ya nchi, kwa gharama ya ziada kulingana na eneo lako."]],
+      [/.*/i, ["Pole, sijaelewa hiyo. Unaweza kuuliza kitu kingine?", "Tafadhali fafanua zaidi?"]],
+    ]
+  };
 
   const getBotResponse = (input) => {
-    for (let [pattern, responses] of pairs) {
+    const pairs = responses[language];
+    for (let [pattern, replyOptions] of pairs) {
       if (pattern.test(input)) {
-        return responses[Math.floor(Math.random() * responses.length)];
+        return replyOptions[Math.floor(Math.random() * replyOptions.length)];
       }
     }
     return "Sorry, something went wrong.";
@@ -34,7 +49,7 @@ const ChatBot = () => {
 
     const userMessage = { sender: 'user', text: input };
     const botMessage = input.toLowerCase() === 'quit'
-      ? { sender: 'bot', text: "Goodbye! Have a nice day." }
+      ? { sender: 'bot', text: language === 'en' ? "Goodbye! Have a nice day." : "Kwaheri! Uwe na siku njema." }
       : { sender: 'bot', text: getBotResponse(input) };
 
     setMessages((prev) => [...prev, userMessage, botMessage]);
@@ -47,6 +62,20 @@ const ChatBot = () => {
         <div className="card rounded-4 shadow-lg bg-secondary bg-gradient text-white">
           <div className="card-body">
             <h3 className="text-center mb-4">💬 Healthcare Assistant</h3>
+
+            <div className="mb-3 text-end">
+              <label htmlFor="language-selector" className="me-2">🌐 Language:</label>
+              <select
+                id="language-selector"
+                className="form-select w-auto d-inline"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="en">English</option>
+                <option value="sw">Swahili</option>
+              </select>
+            </div>
+
             <div
               className="p-3 border rounded-4 bg-dark-subtle mb-3"
               style={{ height: '400px', overflowY: 'auto' }}
@@ -67,6 +96,7 @@ const ChatBot = () => {
                 </div>
               ))}
             </div>
+
             <form onSubmit={handleSubmit} className="d-flex gap-2">
               <input
                 type="text"
