@@ -41,8 +41,8 @@ const Signin = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const { language, switchLanguage } = useLanguage(); // ✅ Get current language
-  const t = translations[language]; // ✅ Pick correct translation set
+  const { language, switchLanguage } = useLanguage(); 
+  const t = translations[language]; 
 
   const submit = async (e) => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const Signin = () => {
 
   return (
     <div className="container mt-5">
-      {/* ✅ Language Selector */}
+      {/*  Language Selector */}
       <div className="text-end mb-3">
         <select
           className="form-select w-auto"
